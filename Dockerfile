@@ -24,4 +24,4 @@ EXPOSE 8000
 RUN rm -rf /app/core/bootstrap/cache/*.php
 
 ENTRYPOINT ["/app/docker-entrypoint.sh"]
-CMD ["sh", "-c", "cd core && php artisan serve --host=0.0.0.0 --port=8000"]
+CMD ["sh", "-c", "cd core && php artisan serve --host=0.0.0.0 --port=8000 --no-interaction 2>/dev/null || php artisan serve --host=0.0.0.0 --port=8000"]
