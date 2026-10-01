@@ -10,8 +10,8 @@ RUN apt-get update && apt-get install -y \
 COPY . .
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# Remove any existing .env to avoid conflicts
-RUN rm -f core/.env core/.env.local
+# Remove ALL .env files recursively to avoid conflicts
+RUN find /app -name ".env*" -type f -delete
 
 RUN cd core && composer install --no-dev --no-scripts 2>&1 || true
 
