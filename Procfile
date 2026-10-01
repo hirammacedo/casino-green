@@ -1,2 +1,2 @@
-﻿web: cd core && php artisan migrate --force && php artisan serve --host=0.0.0.0 --port=\
+web: cd core && php artisan serve --host=0.0.0.0 --port=8000
 worker: cd core && php artisan queue:work
