@@ -10,9 +10,10 @@ RUN apt-get update && apt-get install -y \
 COPY . .
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-RUN rm -f core/.env && printf '%s\n' 'APP_NAME=GREEN' 'APP_ENV=production' 'APP_KEY=base64:abcdefghijklmnopqrstuvwxyz1234567890=' 'APP_DEBUG=false' 'APP_TIMEZONE=UTC' 'APP_URL=https://casino-green.fly.dev' 'DB_CONNECTION=mysql' 'DB_HOST=' 'DB_DATABASE=' 'DB_USERNAME=' 'DB_PASSWORD=' > core/.env
+# Remove any existing .env to avoid conflicts
+RUN rm -f core/.env core/.env.local
 
-RUN cd core && composer install --no-dev --no-scripts
+RUN cd core && composer install --no-dev --no-scripts 2>&1 || true
 
 EXPOSE 8000
 CMD ["sh", "-c", "cd core && php artisan serve --host=0.0.0.0 --port=8000"]

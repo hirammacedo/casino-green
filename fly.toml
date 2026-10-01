@@ -7,7 +7,12 @@ primary_region = "gru"
 [env]
   APP_NAME = "GREEN"
   APP_ENV = "production"
+  APP_KEY = "base64:abcdefghijklmnopqrstuvwxyz1234567890="
+  APP_DEBUG = "false"
+  APP_TIMEZONE = "UTC"
+  APP_URL = "https://casino-green.fly.dev"
   LOG_CHANNEL = "stack"
+  DB_CONNECTION = "mysql"
 
 # [deploy]
 #   release_command = "echo 'Database migrations skipped - configure DB_HOST to run migrations'"
