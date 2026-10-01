@@ -15,8 +15,13 @@ RUN find /app -name ".env*" -type f -delete
 
 RUN cd core && composer install --no-dev --no-scripts 2>&1 || true
 
+# Copy entrypoint script
+COPY docker-entrypoint.sh /app/docker-entrypoint.sh
+RUN chmod +x /app/docker-entrypoint.sh
+
 EXPOSE 8000
 # Clear any development bootstrap cache that may cause issues
 RUN rm -rf /app/core/bootstrap/cache/*.php
 
+ENTRYPOINT ["/app/docker-entrypoint.sh"]
 CMD ["sh", "-c", "cd core && php artisan serve --host=0.0.0.0 --port=8000"]
