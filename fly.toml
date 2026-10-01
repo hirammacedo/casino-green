@@ -9,8 +9,8 @@ primary_region = "gru"
   APP_ENV = "production"
   LOG_CHANNEL = "stack"
 
-[deploy]
-  release_command = "echo 'Database migrations skipped - configure DB_HOST to run migrations'"
+# [deploy]
+#   release_command = "echo 'Database migrations skipped - configure DB_HOST to run migrations'"
 
 [[services]]
   internal_port = 8000
