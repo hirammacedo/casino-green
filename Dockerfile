@@ -18,20 +18,21 @@ RUN apt-get update && apt-get install -y \
 # Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# Set working directory
-WORKDIR /var/www
+# Set working directory to core
+WORKDIR /var/www/html
 
-# Copy project files
+# Copy entire project
 COPY . .
 
-# Install PHP dependencies
-RUN composer install --no-interaction --optimize-autoloader
+# Install PHP dependencies in core
+RUN cd core && composer install --no-interaction --optimize-autoloader --no-dev
 
 # Fix permissions
-RUN chown -R www-data:www-data /var/www
+RUN chown -R www-data:www-data /var/www/html
 
 # Expose port
 EXPOSE 8000
 
-# Start PHP server
+# Run from core directory
+WORKDIR /var/www/html/core
 CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=8000"]
