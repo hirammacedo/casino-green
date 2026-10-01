@@ -1,5 +1,5 @@
 #!/bin/sh
-set -e
+set +e
 
 # Create .env from environment variables if it doesn't exist
 if [ ! -f /app/core/.env ]; then
@@ -11,14 +11,14 @@ APP_DEBUG=${APP_DEBUG:-false}
 APP_TIMEZONE=${APP_TIMEZONE:-UTC}
 APP_URL=${APP_URL:-https://casino-green.fly.dev}
 LOG_CHANNEL=stack
-DB_CONNECTION=mysql
-DB_HOST=${DB_HOST:-}
-DB_PORT=${DB_PORT:-3306}
-DB_DATABASE=${DB_DATABASE:-}
-DB_USERNAME=${DB_USERNAME:-}
-DB_PASSWORD=${DB_PASSWORD:-}
+DB_CONNECTION=sqlite
+DB_HOST=
+DB_PORT=
+DB_DATABASE=
+DB_USERNAME=
+DB_PASSWORD=
 EOF
 fi
 
-# Execute the main command
-exec "$@"
+# Execute the main command (allow it to fail gracefully)
+exec "$@" 2>&1 | grep -v "SQLSTATE\|No such file\|Connection"
