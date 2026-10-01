@@ -10,19 +10,19 @@ RUN apt-get update && apt-get install -y \
 COPY . .
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-RUN if [ ! -f core/.env ]; then \
-    echo 'APP_NAME="GREEN"' > core/.env && \
-    echo 'APP_ENV=production' >> core/.env && \
-    echo 'APP_KEY=base64:abcdefghijklmnopqrstuvwxyz1234567890=' >> core/.env && \
-    echo 'APP_DEBUG=false' >> core/.env && \
-    echo 'APP_TIMEZONE=UTC' >> core/.env && \
-    echo 'APP_URL=https://casino-green.fly.dev' >> core/.env && \
-    echo 'DB_CONNECTION=mysql' >> core/.env && \
-    echo 'DB_HOST=' >> core/.env && \
-    echo 'DB_DATABASE=' >> core/.env && \
-    echo 'DB_USERNAME=' >> core/.env && \
-    echo 'DB_PASSWORD=' >> core/.env; \
-    fi
+RUN cat > core/.env << 'EOF'
+APP_NAME=GREEN
+APP_ENV=production
+APP_KEY=base64:abcdefghijklmnopqrstuvwxyz1234567890=
+APP_DEBUG=false
+APP_TIMEZONE=UTC
+APP_URL=https://casino-green.fly.dev
+DB_CONNECTION=mysql
+DB_HOST=
+DB_DATABASE=
+DB_USERNAME=
+DB_PASSWORD=
+EOF
 
 RUN cd core && composer install --no-dev --no-scripts
 
