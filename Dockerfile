@@ -11,7 +11,7 @@ RUN apt-get update && apt-get install -y \
 COPY . .
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-RUN cd core && composer install --no-dev --no-interaction
+RUN cd core && composer install --no-dev --no-interaction --no-scripts && composer dump-autoload --optimize
 
 EXPOSE 8000
 CMD ["sh", "-c", "cd core && php artisan serve --host=0.0.0.0 --port=8000"]
