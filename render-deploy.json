@@ -1,0 +1,30 @@
+﻿{
+    "envVars":  [
+                    {
+                        "key":  "DB_HOST",
+                        "value":  "localhost"
+                    },
+                    {
+                        "key":  "DB_DATABASE",
+                        "value":  "casino"
+                    },
+                    {
+                        "key":  "DB_USERNAME",
+                        "value":  "casino_user"
+                    },
+                    {
+                        "key":  "APP_ENV",
+                        "value":  "production"
+                    },
+                    {
+                        "key":  "APP_DEBUG",
+                        "value":  "false"
+                    }
+                ],
+    "name":  "casino-app",
+    "buildCommand":  "cd core \u0026\u0026 composer install --no-dev --optimize-autoloader \u0026\u0026 npm install \u0026\u0026 npm run build",
+    "branch":  "main",
+    "repo":  "https://github.com/hirammacedo/SAS-BEAUTY-FLOW",
+    "runtime":  "php",
+    "startCommand":  "cd core \u0026\u0026 php artisan migrate --force \u0026\u0026 php artisan db:seed --force \u0026\u0026 php artisan serve --host=0.0.0.0 --port=$PORT"
+}

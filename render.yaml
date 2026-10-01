@@ -1,0 +1,39 @@
+services:
+  - type: web
+    name: casino-app
+    runtime: php
+    plan: free
+    buildCommand: |
+      cd core
+      composer install --no-dev --optimize-autoloader
+      npm install
+      npm run build
+    startCommand: |
+      cd core
+      php artisan migrate --force
+      php artisan db:seed --force
+      php artisan serve --host=0.0.0.0 --port=$PORT
+    envVars:
+      - key: APP_NAME
+        value: "Casino Platform"
+      - key: APP_ENV
+        value: production
+      - key: APP_DEBUG
+        value: "false"
+      - key: APP_URL
+        value: https://casino-platform.onrender.com
+      - key: DB_CONNECTION
+        value: mysql
+      - key: QUEUE_CONNECTION
+        value: sync
+      - key: SESSION_DRIVER
+        value: file
+
+  - type: mysql
+    name: casino-db
+    plan: free
+    envVars:
+      - key: MYSQL_DATABASE
+        value: casino
+      - key: MYSQL_USER
+        value: casino_user
